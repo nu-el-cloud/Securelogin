@@ -1,0 +1,147 @@
+@startuml
+' Unified Authentication System - Class Diagram'
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class InteractiveUnifiedAuthSystem {
+    - storage_file: str
+    - users: Dict
+    - sessions: Dict
+    - recovery_tokens: Dict
+    - current_user: str
+    - auth_methods: Dict
+    - test_results: List
+    + __init__(storage_file: str)
+    - _load_users(): Dict
+    - _save_users()
+    + interactive_registration()
+    + interactive_security_questions_setup(user_id: str)
+    + interactive_auth_method_registration(user_id: str)
+    - _get_method_credentials(method_key: str): dict
+    + interactive_login()
+    - _get_auth_credentials(method: str): dict
+    + authenticate(user_id: str, primary_method: str, primary_credentials: dict, secondary_methods: Dict[str, dict], risk_level: str): Tuple[bool, str]
+    - _handle_failed_attempt(user_id: str)
+    - _get_required_secondary_methods(risk_level: str, user_id: str): Dict
+    - _create_session(user_id: str, methods_used: List[str]): str
+    + interactive_account_recovery()
+    + show_user_dashboard(user_id: str)
+    + logout()
+}
+
+class BaseAuthMethod <<Abstract>> {
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class PasswordAuth {
+    - passwords: Dict
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class TOTPAuth {
+    - secrets: Dict
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+    - _generate_totp(secret: str): str
+}
+
+class SMSOTPAuth {
+    - otp_storage: Dict
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class EmailOTPAuth {
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class AuthenticatorPush {
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class FIDO2Auth {
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class BiometricAuth {
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class SecurityQuestionsAuth {
+    - questions: Dict
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class OATHAuth {
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class VoiceAuth {
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class CertificateAuth {
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+class TAPAuth {
+    - temporary_passes: Dict
+    + register(user_id: str, credentials: dict): bool
+    + verify(user_id: str, credentials: dict): bool
+}
+
+' Relationships
+BaseAuthMethod <|-- PasswordAuth
+BaseAuthMethod <|-- TOTPAuth
+BaseAuthMethod <|-- SMSOTPAuth
+BaseAuthMethod <|-- EmailOTPAuth
+BaseAuthMethod <|-- AuthenticatorPush
+BaseAuthMethod <|-- FIDO2Auth
+BaseAuthMethod <|-- BiometricAuth
+BaseAuthMethod <|-- SecurityQuestionsAuth
+BaseAuthMethod <|-- OATHAuth
+BaseAuthMethod <|-- VoiceAuth
+BaseAuthMethod <|-- CertificateAuth
+BaseAuthMethod <|-- TAPAuth
+
+SMSOTPAuth <|-- EmailOTPAuth
+
+InteractiveUnifiedAuthSystem --> BaseAuthMethod : uses >
+InteractiveUnifiedAuthSystem --> PasswordAuth : manages >
+InteractiveUnifiedAuthSystem --> TOTPAuth : manages >
+InteractiveUnifiedAuthSystem --> SMSOTPAuth : manages >
+InteractiveUnifiedAuthSystem --> EmailOTPAuth : manages >
+InteractiveUnifiedAuthSystem --> AuthenticatorPush : manages >
+InteractiveUnifiedAuthSystem --> FIDO2Auth : manages >
+InteractiveUnifiedAuthSystem --> BiometricAuth : manages >
+InteractiveUnifiedAuthSystem --> SecurityQuestionsAuth : manages >
+InteractiveUnifiedAuthSystem --> OATHAuth : manages >
+InteractiveUnifiedAuthSystem --> VoiceAuth : manages >
+InteractiveUnifiedAuthSystem --> CertificateAuth : manages >
+InteractiveUnifiedAuthSystem --> TAPAuth : manages >
+
+note right of InteractiveUnifiedAuthSystem
+  Manages user registration,
+  authentication, and recovery.
+  Coordinates between different
+  authentication methods.
+end note
+
+note right of BaseAuthMethod
+  Abstract base class defining
+  the interface for all
+  authentication methods.
+end note
+
+@enduml
