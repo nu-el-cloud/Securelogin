@@ -1,0 +1,43 @@
+@startuml
+
+' Title of the diagram
+title SimpleSecureLogin System Design
+
+' Main Class
+class SimpleSecureLogin {
+  - data_file : str
+  - users : dict
+  + __init__(data_file: str)
+  + load_users() : dict
+  + save_users() : void
+  + hash_password(password: str) : str
+  + verify_password(stored_password: str, provided_password: str) : bool
+  + setup_2fa(username: str) : str
+  + verify_2fa(username: str, code: str) : bool
+  + register(username: str, password: str) : bool
+  + login(username: str, password: str) : bool
+}
+
+' Notes for key methods (Keep them simple)
+note right of SimpleSecureLogin::hash_password
+  Uses PBKDF2 with SHA256 and salt
+end note
+
+note right of SimpleSecureLogin::setup_2fa
+  Sets up TOTP 2FA
+end note
+
+note right of SimpleSecureLogin::verify_2fa
+  Verifies TOTP code
+end note
+
+
+' Dependencies (Uses relationships)
+SimpleSecureLogin ..> hashlib
+SimpleSecureLogin ..> secrets
+SimpleSecureLogin ..> pyotp
+SimpleSecureLogin ..> json
+SimpleSecureLogin ..> os
+main ..> SimpleSecureLogin
+
+@enduml
