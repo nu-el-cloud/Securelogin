@@ -2,5 +2,21 @@
     "lilkay": {
         "password": "0c9d33bd9802043845fe3b83f09cd8075eb0b05584d35105f97ca799f8979e6288084f955ad004b1b749c72fc8800659",
         "2fa_secret": "C6BQSBCTA3SIGF262GCSMTW3V7CIKNZK"
+    },
+    "king": {
+        "password": "feb96cf9647750697dec029faf359683482935cfc669d3181818703931cd268f369741d4c7269f5d3dda7df51bfcd5c7",
+        "2fa_secret": "VRWVEGO6CBTSJBRW46BBJDCZY6NBMDD7"
+    },
+    "gao": {
+        "password": "d2ed18f82d055a92ee04287809880b29fe113b2493519ec80961e89916957d4988e65f3da5681e3c1373cc4f38838966",
+        "2fa_secret": "BOJRYCA6M6JKCU2J4WOMGHRXNZ7DIW56"
+    },
+    "musaib": {
+        "password": "8fdf682ff377d39397bcfd7279de9efb45220261e8eba5688516a9350267a283ccf6a8b3b159530851e98c50d421f8db",
+        "2fa_secret": "MOGOAAQBPKO6OCSC7IYLHYHQ57UROE7Q"
+    },
+    "rat ": {
+        "password": "1db3791e55580638473772d578ff1f1505b27d24c6584542edc96fde7170bc05791309fa59443a94dfd08df8677c2c4f",
+        "2fa_secret": "JO7IH5ESSYR55JN3VWWMPYW3EWC4V2XB"
     }
 }
